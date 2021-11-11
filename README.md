@@ -17,3 +17,8 @@ dotnet build
 ```bash
 dotnet run
 ```
+
+Browse 
+```
+https://localhost:5001/api/WebApi
+```
