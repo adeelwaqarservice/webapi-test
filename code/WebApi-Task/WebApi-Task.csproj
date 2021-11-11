@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>WebApi_Task</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebApi-Task.Data\WebApi-Task.Data.csproj" />
+    <ProjectReference Include="..\WebApi-Task.Mock\WebApi-Task.Mock.csproj" />
+    <ProjectReference Include="..\WebApi-Task.Models\WebApi-Task.Models.csproj" />
+  </ItemGroup>
+
+
+</Project>
