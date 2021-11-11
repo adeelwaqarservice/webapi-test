@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using WebApi_Task.Models.Interfaces;
 
 namespace WebApi_Task.Controllers
 {
@@ -11,11 +12,13 @@ namespace WebApi_Task.Controllers
     {
         private readonly ILogger<WebApiController> _logger;
         private readonly AppConfig _config;
+        private readonly IWebRepository _repo;
 
-        public WebApiController(ILogger<WebApiController> logger, AppConfig config)
+        public WebApiController(ILogger<WebApiController> logger, AppConfig config, IWebRepository repo)
         {
             _logger = logger;
             _config = config;
+            _repo = repo;
         }
 
         [HttpGet]
@@ -24,14 +27,14 @@ namespace WebApi_Task.Controllers
             try
             {
                 _logger.LogInformation("Started preparing data on GET");
-                var mockData = Mocks.Mocks.GetWebApiMockData();
+                var data = _repo.GetWebsiteData();
                 //Return number of navigation links based on the configuration
-                if (mockData?.Header?.NavigationLinks?.Count() > _config?.MaxNavigationLinks)
+                if (data?.Header?.NavigationLinks?.Count() > _config?.MaxNavigationLinks)
                 {
-                    mockData.Header.NavigationLinks = mockData?.Header?.NavigationLinks?.Take(_config.MaxNavigationLinks);
+                    data.Header.NavigationLinks = data?.Header?.NavigationLinks?.Take(_config.MaxNavigationLinks);
                 }
-                _logger.LogInformation($"Returning data GET {mockData}");
-                return Ok(mockData);
+                _logger.LogInformation($"Returning data GET {data}");
+                return Ok(data);
             }
             catch (Exception ex)
             {
